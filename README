@@ -1,0 +1,29 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=4462
+
+DESCRIPTION
+When Vim itself is resized, the rightmost and bottom windows receive or lose
+the change in size; all other windows maintain their size as long as possible.
+What you usually want is that _all_ window heights and widths are adapted, so
+that the proportions of the windows remain constant.
+
+This plugin defines a :ProportionalResize command that wraps Ex commands
+like
+    :set lines=40 columns=80
+    :simalt ~m
+    :Fullscreen
+and scales the window sizes to the new dimensions. It also records the window
+layout during brief pauses and is then able to auto-adapt after spontaneous
+resizings through the mouse or window manager.
+
+SOURCE
+Inspired by the following Stack Overflow question:
+    http://stackoverflow.com/questions/14649698/how-to-resize-split-windows-in-vim-proportionally
+
+USAGE
+:ProportionalResize {resize-cmd}
+                        Execute {resize-cmd} (e.g. :setlocal lines=40) and
+                        adapt the proportions of the current window layout to
+                        the new size. So if for example you have 3 windows
+                        split vertically 1:1:2, and a horizontal split 4:1,
+                        the proportions will be kept instead of the rightmost
+                        and bottom windows getting all the space increases.
