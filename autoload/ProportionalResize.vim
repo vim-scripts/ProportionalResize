@@ -4,12 +4,15 @@
 "   - ProportionalResize/Record.vim autoload script
 "   - ingo/msg.vim autoload script
 "
-" Copyright: (C) 2013 Ingo Karkat
+" Copyright: (C) 2013-2014 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.01.004	15-Jan-2014	Add isAdapt flag to
+"				ProportionalResize#CommandWrapper() to implement
+"				the :NoProportionalResize command.
 "   1.00.003	04-Mar-2013	A switch of tab pages can also trigger the
 "				VimResized event, e.g. when running maximized /
 "				fullscreen and one tab has scrollbars on both
@@ -77,13 +80,15 @@ function! ProportionalResize#AdaptWindowSizes( previousDimensions )
 "****D echomsg '####' join(l:winrestCommands, '|')
 endfunction
 
-function! ProportionalResize#CommandWrapper( resizeCommand )
+function! ProportionalResize#CommandWrapper( isAdapt, resizeCommand )
     let l:previousDimensions = ProportionalResize#Record#RecordDimensions()
     try
 	execute a:resizeCommand
-	call ProportionalResize#AdaptWindowSizes(l:previousDimensions)
+	if a:isAdapt
+	    call ProportionalResize#AdaptWindowSizes(l:previousDimensions)
+	endif
 	call ProportionalResize#Record#RecordDimensions()
-    catch /^Vim\%((\a\+)\)\=:E/
+    catch /^Vim\%((\a\+)\)\=:/
 	call ingo#msg#VimExceptionMsg()
     endtry
 endfunction

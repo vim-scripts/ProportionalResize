@@ -44,6 +44,14 @@ USAGE						    *ProportionalResize-usage*
 			split vertically 1:1:2, and a horizontal split 4:1,
 			the proportions will be kept instead of the rightmost
 			and bottom windows getting all the space increases.
+						       *:NoProportionalResize*
+:NoProportionalResize {resize-cmd}
+			Execute {resize-cmd} (e.g. :setlocal lines=40) without
+			adapting the proportions of the current window layout.
+			You can wrap commands which would confuse the plugin's
+			algorithm (e.g. a rotate function that switches
+			vertical with horizontal windows), so that it won't
+			automatically adapt the window layout.
 
 ==============================================================================
 INSTALLATION				     *ProportionalResize-installation*
@@ -107,6 +115,12 @@ IDEAS						    *ProportionalResize-ideas*
 ==============================================================================
 HISTORY						  *ProportionalResize-history*
 
+1.01	23-May-2014
+- Add :NoProportionalResize command.
+- BUG: Always restore the original 'updatetime' option value after the resize.
+  Otherwise, the lower value may persist, e.g. when the "Stale window
+  dimensions record" error is given.
+
 1.00	04-Mar-2013
 First published version.
 
@@ -114,8 +128,8 @@ First published version.
 Started development.
 
 ==============================================================================
-Copyright: (C) 2013 Ingo Karkat
-The VIM LICENSE applies to this script; see |copyright|.
+Copyright: (C) 2013-2014 Ingo Karkat
+The VIM LICENSE applies to this plugin; see |copyright|.
 
 Maintainer:	Ingo Karkat <ingo@karkat.de>
 ==============================================================================

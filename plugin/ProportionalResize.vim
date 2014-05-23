@@ -5,12 +5,13 @@
 "   - ProportionalResize.vim autoload script
 "   - ProportionalResize/Record.vim autoload script
 "
-" Copyright: (C) 2013 Ingo Karkat
+" Copyright: (C) 2013-2014 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.01.002	15-Jan-2014	Add :NoProportionalResize command.
 "   1.00.001	04-Feb-2013	file creation
 
 " Avoid installing twice or when in unsupported Vim version.
@@ -34,6 +35,7 @@ endif
 
 "- commands --------------------------------------------------------------------
 
-command! -nargs=1 -complete=command ProportionalResize call ProportionalResize#CommandWrapper(<q-args>)
+command! -nargs=1 -complete=command   ProportionalResize call ProportionalResize#CommandWrapper(1, <q-args>)
+command! -nargs=1 -complete=command NoProportionalResize call ProportionalResize#CommandWrapper(0, <q-args>)
 
 " vim: set ts=8 sts=4 sw=4 noexpandtab ff=unix fdm=syntax :

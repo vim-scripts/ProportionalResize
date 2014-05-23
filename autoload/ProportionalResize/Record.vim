@@ -3,12 +3,16 @@
 " DEPENDENCIES:
 "   - ProportionalResize.vim autoload script
 "
-" Copyright: (C) 2013 Ingo Karkat
+" Copyright: (C) 2013-2014 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.01.004	16-May-2014	BUG: Always restore the original 'updatetime'
+"				option value after the resize. Otherwise, the
+"				lower value may persist, e.g. when the "Stale
+"				window dimensions record" error is given.
 "   1.00.003	04-Mar-2013	A switch of tab pages can also trigger the
 "				VimResized event, e.g. when running maximized /
 "				fullscreen and one tab has scrollbars on both
@@ -32,6 +36,11 @@ function! s:TriggerCursorHold()
 endfunction
 
 function! s:AfterResize()
+    if exists('s:save_updatetime')
+	let &updatetime = s:save_updatetime
+	unlet s:save_updatetime
+    endif
+
     if s:dimensions.tabnr != tabpagenr()
 	" A switch of tab pages can also trigger the VimResized event, e.g. when
 	" running maximized / fullscreen and one tab has scrollbars on both
@@ -46,11 +55,6 @@ function! s:AfterResize()
 
     call ProportionalResize#AdaptWindowSizes(s:dimensions)
     call ProportionalResize#Record#RecordDimensions()
-
-    if exists('s:save_updatetime')
-	let &updatetime = s:save_updatetime
-	unlet s:save_updatetime
-    endif
 endfunction
 
 function! s:RecordResize()

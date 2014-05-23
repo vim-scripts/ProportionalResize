@@ -27,3 +27,11 @@ USAGE
                         split vertically 1:1:2, and a horizontal split 4:1,
                         the proportions will be kept instead of the rightmost
                         and bottom windows getting all the space increases.
+
+:NoProportionalResize {resize-cmd}
+                        Execute {resize-cmd} (e.g. :setlocal lines=40) without
+                        adapting the proportions of the current window layout.
+                        You can wrap commands which would confuse the plugin's
+                        algorithm (e.g. a rotate function that switches
+                        vertical with horizontal windows), so that it won't
+                        automatically adapt the window layout.
